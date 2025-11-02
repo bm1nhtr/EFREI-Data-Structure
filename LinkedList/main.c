@@ -32,9 +32,10 @@ int main(void) {
 
 
 
-    SNode *pnode = &n1; // pnode is a pointer to a SNode (not initialized yet)
-                  // *pnode access the value stored at the address pnode points to — i.e., the value of n1
-    // pnode = &n1; // pnode now stores the address of node n1
+    SNode *pnode = &n1; // pnode is a pointer to a SNode, stores the address of n1
+                        // pnode = &n1 means: pnode points to n1 (contains address of n1)
+    // *pnode dereferences the pointer → returns the ENTIRE SNode struct (data + next)
+    // *pnode = {data: n1.data, next: n1.next} - the complete struct, not just a single value
 
 
     printf("Compare the address stored in pnode with the address of n1: %s\n",(&n1 == pnode) ? "Yes" : "No");

@@ -14,18 +14,34 @@
 // Session 11-10-25
 // Function to create a new node for a singly linked list
 SNode *ds_slit_create_node(int data) { // 1
-    SNode *pnode = (SNode *)malloc(sizeof(SNode)); // Allocate memory for a new SNode on heap
-                                                        // Read md documentation for more ...
+    // Allocate memory for a new SNode on heap
+    // malloc(sizeof(SNode)) requests memory for ENTIRE struct (data + next fields)
+    // Returns void* pointer to allocated memory block
+    SNode *pnode = (SNode *)malloc(sizeof(SNode)); // Cast void* to SNode*
+                                                    // pnode now stores address of allocated memory
+                                                    // *pnode would give us the ENTIRE struct at that address
+    
+    // Access and set individual fields using -> operator
     pnode->data = data; // Set the data field of the new node to the given value
+                        // Equivalent to: (*pnode).data = data
+    
     pnode->next = NULL; // Initialize the next pointer to NULL since this node
                         // is not linked to any other node yet
-    return pnode; // Return the pointer to the newly created node
+                        // Equivalent to: (*pnode).next = NULL
+    
+    return pnode; // Return the pointer (address) to the newly created node
+                  // Caller can use this pointer to access the node via -> operator
 }
 
 
 void ds_slist_init(SList* plist) { //2
-    plist->head = NULL;
-    //{*plist}.head = NULL;
+    // plist is a pointer to SList → contains address of an SList struct
+    // *plist would dereference to get the ENTIRE SList struct (which contains head field)
+    
+    plist->head = NULL; // Access the 'head' field of SList using -> operator
+                        // Equivalent to: (*plist).head = NULL
+                        // This sets the head field of the SList to NULL (empty list)
+                        // plist points to the struct, -> accesses its head field
 }
 SList ds_slist_create() { //3
     SList list;
