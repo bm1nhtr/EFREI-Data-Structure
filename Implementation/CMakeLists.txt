@@ -7,4 +7,6 @@ add_executable(LinkedList main.c
         Slist.c
         Slist.h
         Btree.c
-        Btree.h)
+        Btree.h
+        Queue.c
+        Queue.h)

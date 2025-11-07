@@ -11,7 +11,7 @@
 
 // Linked List
 // CHECK line 97-98 !!!! 17/10/25
-int main(void) {
+int main_SLIST(void) {
     // Session 11-10-25
     SNode n1;
     n1.data = 10;
@@ -91,8 +91,22 @@ int main(void) {
     return 0;
 }
 
+
+// Helper functions for tree traversal callbacks
+// Must be defined before use (static functions)
+static void print_int(int v){
+    printf("%d ", v);// Print integer value with space
+}
+
+static void print_int_in_hex(int v) {
+    printf("%x ", v); // Print integer value in hexadecimal with space
+}
+
+static void print_node_value(TNode* pnode) {
+    if (pnode) printf("%d ", pnode->data); // Print node data if node exists
+}
 // Binary Tree
-int main_Btree(void) {
+int main(void) {
     // Binary Tree
     SNode n100;
     n100.data = 14;
@@ -140,7 +154,66 @@ int main_Btree(void) {
     ds_btree_attach_right(n10, n14);
     ds_btree_attach_left(n14, n13);
 
-    ds_btree_size(n8); /// ????
+
+    
+    // Calculate and print tree size (number of nodes)
+    int tree_size = ds_btree_size(n8);
+    printf("Tree size: %d nodes\n", tree_size);
+    
+    
+    //session 7/11/25 - Tree Traversal Examples
+    
+    // Preorder traversal: Root -> Left -> Right
+    printf("Preorder traversal: ");
+    ds_btree_preorder_display(T.root);
+    printf("\n");
+    
+    // Preorder with custom print function (integer)
+    printf("Preorder (int): ");
+    ds_btree_preorder(T.root, print_int);
+    printf("\n");
+    
+    // Preorder with custom print function (hexadecimal)
+    printf("Preorder (hex): ");
+    ds_btree_preorder(T.root, print_int_in_hex);
+    printf("\n");
+    
+    // Inorder traversal: Left -> Root -> Right
+    printf("Inorder traversal: ");
+    ds_btree_inorder(T.root, print_int);
+    printf("\n");
+    
+    // Postorder traversal: Left -> Right -> Root
+    printf("Postorder traversal: ");
+    ds_btree_postorder(T.root, print_int);
+    printf("\n");
+    
+    // Calculate and print tree height
+    int tree_height = ds_btree_height(T.root);
+    printf("Tree height: %d\n", tree_height);
+    
+    // Inorder traversal visiting entire nodes (not just data)
+    printf("Inorder (node visit): ");
+    ds_btree_inorder_node(T.root, print_node_value);
+    printf("\n");
+
+
+    printf("Affichage en largeur: ");
+    ds_btree_level_order(T.root,print_int);
+
+
+    printf("************BST***************");
+    BTree bst;
+    ds_btree_init(&bst);
+    ds_bsttree_add(&bst,10);
+    ds_bsttree_add(&bst,5);
+    ds_bsttree_add(&bst,20);
+    ds_bsttree_add(&bst,15);
+    ds_bsttree_add(&bst,10);
+    ds_bsttree_add(&bst,2);
+
+    ds_btree_inorder(bst.root, print_int);
+
 
     //ds_btree_clear(&T);
     return 0;
