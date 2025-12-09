@@ -1,7 +1,7 @@
 #include "Btree.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "Queue.h"
+#include "../../Queue/Queue.h"
 
 //session 17/10
 #include <stdlib.h>  /* malloc, free */
@@ -207,36 +207,161 @@ void ds_btree_level_order(TNode* pnode, ds_visit_fn visit) {
 
     }
 }
+// Ajouter une valeur dans un arbre binaire de recherche
+// Complexité: O(h) où h est la hauteur de l'arbre (O(log n) si équilibré, O(n) dans le pire cas)
 void ds_bsttree_add(BTree* tree, int value) {
-
     if (ds_btree_is_empty(tree)) {
-        tree->root = ds_btree_create_node(value);;
+        tree->root = ds_btree_create_node(value);
+    } else {
+        ds_bsttree_add_to_node(tree->root, value);
     }
-    else {
-        TNode* cur = tree->root;
-        if (value < cur->data) {
-            if (cur->left == NULL) cur->left = ds_btree_create_node(value);
-            else ds_bsttree_add(tree,value);
+}
+
+// Ajouter une valeur dans le sous-arbre enraciné à cur
+// Complexité: O(h) où h est la hauteur du sous-arbre
+void ds_bsttree_add_to_node(TNode* cur, int value) {
+    if (cur == NULL) return;
+    
+    if (value < cur->data) {
+        if (cur->left == NULL) {
+            cur->left = ds_btree_create_node(value);
+        } else {
+            ds_bsttree_add_to_node(cur->left, value);
         }
-        else {
-            if (cur->right == NULL) cur->right = ds_btree_create_node(value);
-            else ds_bsttree_add(tree,value);
+    } else {
+        // value >= cur->data (on permet les doublons à droite)
+        if (cur->right == NULL) {
+            cur->right = ds_btree_create_node(value);
+        } else {
+            ds_bsttree_add_to_node(cur->right, value);
         }
     }
 }
 
-void ds_bsttree_add_to_node(TNode* cur, int value) {
+// Rechercher une valeur dans un BST
+// Complexité: O(h) où h est la hauteur de l'arbre
+TNode* ds_bsttree_find(BTree* tree, int value) {
+    if (ds_btree_is_empty(tree)) {
+        return NULL;
+    }
+    return ds_bsttree_find_in_node(tree->root, value);
+}
 
-    if (cur){
-        if (value < cur->data) {
-            if (cur->left == NULL) cur->left = ds_btree_create_node_to_node(value);
-            else ds_bsttree_add(tree,value);
-        }
-        else {
-            if (cur->right == NULL) cur->right = ds_btree_create_node_to_node(value);
-            else ds_bsttree_add(tree,value);
+// Rechercher une valeur dans le sous-arbre enraciné à node
+// Complexité: O(h)
+TNode* ds_bsttree_find_in_node(TNode* node, int value) {
+    if (node == NULL) return NULL;
+    
+    if (value == node->data) {
+        return node;
+    } else if (value < node->data) {
+        return ds_bsttree_find_in_node(node->left, value);
+    } else {
+        return ds_bsttree_find_in_node(node->right, value);
+    }
+}
+
+// Trouver le nœud avec la valeur minimale dans un sous-arbre
+// Complexité: O(h)
+static TNode* ds_bsttree_find_min(TNode* node) {
+    if (node == NULL) return NULL;
+    while (node->left != NULL) {
+        node = node->left;
+    }
+    return node;
+}
+
+// Trouver le nœud avec la valeur maximale dans un sous-arbre
+// Complexité: O(h)
+static TNode* ds_bsttree_find_max(TNode* node) {
+    if (node == NULL) return NULL;
+    while (node->right != NULL) {
+        node = node->right;
+    }
+    return node;
+}
+
+// Supprimer une valeur d'un BST
+// Complexité: O(h) où h est la hauteur de l'arbre
+int ds_bsttree_remove(BTree* tree, int value) {
+    if (ds_btree_is_empty(tree)) {
+        return 0; // Arbre vide
+    }
+    
+    TNode* parent = NULL;
+    TNode* node = tree->root;
+    int is_left_child = 0;
+    
+    // Chercher le nœud à supprimer et son parent
+    while (node != NULL && node->data != value) {
+        parent = node;
+        if (value < node->data) {
+            node = node->left;
+            is_left_child = 1;
+        } else {
+            node = node->right;
+            is_left_child = 0;
         }
     }
+    
+    if (node == NULL) {
+        return 0; // Valeur non trouvée
+    }
+    
+    // Cas 1: Nœud feuille (pas d'enfants)
+    if (node->left == NULL && node->right == NULL) {
+        if (parent == NULL) {
+            // C'est la racine
+            tree->root = NULL;
+        } else if (is_left_child) {
+            parent->left = NULL;
+        } else {
+            parent->right = NULL;
+        }
+        free(node);
+    }
+    // Cas 2: Un seul enfant
+    else if (node->left == NULL) {
+        // Seulement enfant droit
+        if (parent == NULL) {
+            tree->root = node->right;
+        } else if (is_left_child) {
+            parent->left = node->right;
+        } else {
+            parent->right = node->right;
+        }
+        free(node);
+    } else if (node->right == NULL) {
+        // Seulement enfant gauche
+        if (parent == NULL) {
+            tree->root = node->left;
+        } else if (is_left_child) {
+            parent->left = node->left;
+        } else {
+            parent->right = node->left;
+        }
+        free(node);
+    }
+    // Cas 3: Deux enfants - remplacer par le successeur (min du sous-arbre droit)
+    else {
+        TNode* successor = ds_bsttree_find_min(node->right);
+        node->data = successor->data;
+        // Supprimer le successeur (qui a au plus un enfant droit)
+        TNode* succ_parent = node;
+        TNode* succ = node->right;
+        while (succ->left != NULL) {
+            succ_parent = succ;
+            succ = succ->left;
+        }
+        if (succ_parent == node) {
+            succ_parent->right = succ->right;
+        } else {
+            succ_parent->left = succ->right;
+        }
+        free(succ);
+    }
+    
+    return 1; // Succès
 }
 
 

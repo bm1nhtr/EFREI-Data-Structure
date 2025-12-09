@@ -1,8 +1,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "Btree.h" // import Btree header
-#include "Slist.h" // import Slist header
+#include "Trees/Btree/Btree.h"  // import Btree header
+#include "Lists/Slist/Slist.h"  // import Slist header
 
 // - main() : Linked List
 // - main() : Binary tree
