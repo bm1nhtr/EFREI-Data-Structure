@@ -38,8 +38,8 @@ int ds_btree_is_empty(const BTree* tree);
 int ds_btree_size(TNode* node);
 
 // Types de pointeurs de fonction pour les parcours d'arbre
-typedef void(*ds_visit_fn)(int value);        // Fonction callback pour visiter la donnée d'un nœud (int)
-typedef void(*ds_visit_node_fn)(TNode* node); // Fonction callback pour visiter un nœud entier
+typedef void(*ds_visit_fn)(int value);                    // Fonction callback pour visiter la donnée d'un nœud (int)
+typedef void(*ds_visit_node_fn)(const TNode* node);       // Fonction callback pour visiter un nœud entier (const pour compatibilité)
 
 // Opérations sur l'arbre
 void ds_btree_clear(BTree* tree); // Vider tous les nœuds de l'arbre

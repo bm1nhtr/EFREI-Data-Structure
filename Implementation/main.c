@@ -1,5 +1,5 @@
-//
-// Fichier de test pour toutes les structures de données
+﻿//
+// Fichier de test pour toutes les structures de donnees
 //
 
 #include <stdio.h>
@@ -19,36 +19,38 @@ static void print_int(int v) {
     printf("%d ", v);
 }
 
-// Fonction helper pour afficher un entier en hexadécimal
-static void print_int_in_hex(int v) {
-    printf("%x ", v);
-}
+// Fonction helper pour afficher un entier en hexadecimal
+// (Non utilisee actuellement, mais disponible pour les tests futurs)
+// static void print_int_in_hex(int v) {
+//     printf("%x ", v);
+// }
 
 // Fonction helper pour afficher la valeur d'un nœud d'arbre
+// (Non utilisee actuellement, mais disponible pour les tests futurs)
 // pnode est un pointeur vers TNode (TNode*)
-// On utilise -> pour accéder au champ data du nœud pointé
-static void print_node_value(TNode* pnode) {
-    if (pnode) printf("%d ", pnode->data); // pnode->data accède à la donnée du nœud
-}
+// On utilise -> pour acceder au champ data du nœud pointe
+// static void print_node_value(TNode* pnode) {
+//     if (pnode) printf("%d ", pnode->data); // pnode->data accede a la donnee du nœud
+// }
 
-// ==================== TEST LISTE SIMPLEMENT CHAINÉE (HEAD) ====================
+// ==================== TEST LISTE SIMPLEMENT CHAINeE (HEAD) ====================
 
 void test_slist(void) {
-    printf("\n========== TEST LISTE SIMPLEMENT CHAINÉE (HEAD) ==========\n\n");
+    printf("\n========== TEST LISTE SIMPLEMENT CHAINEE (HEAD) ==========\n\n");
     
-    // Déclaration d'une variable de type SList (structure de liste)
+    // Declaration d'une variable de type SList (structure de liste)
     // list est une variable locale, pas un pointeur
     SList list;
     
     // ds_slist_init(&list) : on passe l'ADRESSE de list avec &list
     // &list retourne un pointeur vers list (SList*)
-    // La fonction init modifie directement la liste passée par adresse
+    // La fonction init modifie directement la liste passee par adresse
     ds_slist_init(&list);
     
     // Test insertion
-    printf("Insertion en tête: 10, 20, 30\n");
+    printf("Insertion en tete: 10, 20, 30\n");
     // On passe &list (adresse) car la fonction modifie la liste
-    // Les valeurs 10, 20, 30 sont passées par valeur (int)
+    // Les valeurs 10, 20, 30 sont passees par valeur (int)
     ds_slist_insert_head(&list, 10);
     ds_slist_insert_head(&list, 20);
     ds_slist_insert_head(&list, 30);
@@ -62,49 +64,49 @@ void test_slist(void) {
     // Test recherche
     printf("\nRecherche de 20: ");
     // found est un pointeur vers SNode (SNode*)
-    // ds_slist_find retourne un pointeur vers le nœud trouvé, ou NULL si non trouvé
+    // ds_slist_find retourne un pointeur vers le nœud trouve, ou NULL si non trouve
     SNode* found = ds_slist_find(&list, 20);
-    if (found) { // Si found n'est pas NULL (nœud trouvé)
-        // found->data : on utilise -> pour accéder au champ data du nœud pointé
+    if (found) { // Si found n'est pas NULL (nœud trouve)
+        // found->data : on utilise -> pour acceder au champ data du nœud pointe
         // found est un pointeur, donc on utilise -> et non .
-        printf("Trouvé! Valeur = %d\n", found->data);
+        printf("Trouve! Valeur = %d\n", found->data);
     } else {
-        printf("Non trouvé\n");
+        printf("Non trouve\n");
     }
     
-    // Test insertion à un index
-    printf("\nInsertion de 99 à l'index 2\n");
+    // Test insertion a un index
+    printf("\nInsertion de 99 a l'index 2\n");
     ds_slist_insert_at(&list, 2, 99);
     ds_slist_print(&list);
     
     // Test suppression
-    // value est une variable locale pour stocker la valeur supprimée
+    // value est une variable locale pour stocker la valeur supprimee
     int value;
-    printf("\nSuppression de la tête: ");
+    printf("\nSuppression de la tete: ");
     // ds_slist_remove_head(&list, &value) :
-    //   - &list : adresse de la liste à modifier
-    //   - &value : adresse de la variable où stocker la valeur supprimée
-    //   La fonction retourne 1 si succès, 0 si échec
+    //   - &list : adresse de la liste a modifier
+    //   - &value : adresse de la variable ou stocker la valeur supprimee
+    //   La fonction retourne 1 si succes, 0 si echec
     if (ds_slist_remove_head(&list, &value)) {
-        printf("Valeur supprimée = %d\n", value);
+        printf("Valeur supprimee = %d\n", value);
     }
     ds_slist_print(&list);
     
     printf("\nSuppression de la valeur 100: ");
     if (ds_slist_remove_value(&list, 100)) {
-        printf("Supprimé avec succès\n");
+        printf("Supprime avec succes\n");
     }
     ds_slist_print(&list);
     
-    // Nettoyage : libérer toute la mémoire allouée
+    // Nettoyage : liberer toute la memoire allouee
     ds_slist_clear(&list);
-    printf("\nListe vidée\n");
+    printf("\nListe videe\n");
 }
 
-// ==================== TEST LISTE SIMPLEMENT CHAINÉE (HEAD + TAIL) ====================
+// ==================== TEST LISTE SIMPLEMENT CHAINeE (HEAD + TAIL) ====================
 
 void test_slist_tail(void) {
-    printf("\n========== TEST LISTE SIMPLEMENT CHAINÉE (HEAD + TAIL) ==========\n\n");
+    printf("\n========== TEST LISTE SIMPLEMENT CHAINEE (HEAD + TAIL) ==========\n\n");
     
     // SListTail est une structure qui contient head ET tail
     // Cela permet insertion en queue en O(1) au lieu de O(n)
@@ -113,7 +115,7 @@ void test_slist_tail(void) {
     
     // Test insertion en queue (O(1) maintenant grâce au pointeur tail!)
     printf("Insertion en queue: 1, 2, 3, 4, 5\n");
-    // Chaque insertion est O(1) car on a directement accès au dernier nœud via tail
+    // Chaque insertion est O(1) car on a directement acces au dernier nœud via tail
     ds_slist_tail_insert_tail(&list, 1);
     ds_slist_tail_insert_tail(&list, 2);
     ds_slist_tail_insert_tail(&list, 3);
@@ -121,7 +123,7 @@ void test_slist_tail(void) {
     ds_slist_tail_insert_tail(&list, 5);
     ds_slist_tail_print(&list);
     
-    printf("\nInsertion en tête: 0\n");
+    printf("\nInsertion en tete: 0\n");
     ds_slist_tail_insert_head(&list, 0);
     ds_slist_tail_print(&list);
     
@@ -130,56 +132,56 @@ void test_slist_tail(void) {
     // found est un pointeur vers SNodeTail
     // La fonction retourne un pointeur vers le nœud ou NULL
     SNodeTail* found = ds_slist_tail_find(&list, 3);
-    if (found) { // Vérifier si le pointeur n'est pas NULL
-        // found->data : accès au champ data via le pointeur
-        printf("Trouvé! Valeur = %d\n", found->data);
+    if (found) { // Verifier si le pointeur n'est pas NULL
+        // found->data : acces au champ data via le pointeur
+        printf("Trouve! Valeur = %d\n", found->data);
     }
     
     // Test suppression
-    int value; // Variable pour stocker la valeur supprimée
-    printf("\nSuppression de la tête: ");
-    // &value : on passe l'adresse pour que la fonction puisse y écrire la valeur
+    int value; // Variable pour stocker la valeur supprimee
+    printf("\nSuppression de la tete: ");
+    // &value : on passe l'adresse pour que la fonction puisse y ecrire la valeur
     if (ds_slist_tail_remove_head(&list, &value)) {
-        printf("Valeur supprimée = %d\n", value);
+        printf("Valeur supprimee = %d\n", value);
     }
     ds_slist_tail_print(&list);
     
     // Nettoyage
     ds_slist_tail_clear(&list);
-    printf("\nListe vidée\n");
+    printf("\nListe videe\n");
 }
 
-// ==================== TEST LISTE DOUBLEMENT CHAINÉE ====================
+// ==================== TEST LISTE DOUBLEMENT CHAINeE ====================
 
 void test_dlist(void) {
-    printf("\n========== TEST LISTE DOUBLEMENT CHAINÉE ==========\n\n");
+    printf("\n========== TEST LISTE DOUBLEMENT CHAINEE ==========\n\n");
     
-    // DList : liste doublement chainée, chaque nœud a prev ET next
+    // DList : liste doublement chainee, chaque nœud a prev ET next
     DList list;
     ds_dlist_init(&list); // Initialiser avec l'adresse
     
     // Test insertion
-    printf("Insertion en tête: 10, 20\n");
+    printf("Insertion en tete: 10, 20\n");
     ds_dlist_insert_head(&list, 10);
     ds_dlist_insert_head(&list, 20);
-    ds_dlist_print_forward(&list); // Parcours de gauche à droite
+    ds_dlist_print_forward(&list); // Parcours de gauche a droite
     
     printf("\nInsertion en queue: 30, 40\n");
     ds_dlist_insert_tail(&list, 30);
     ds_dlist_insert_tail(&list, 40);
     ds_dlist_print_forward(&list);
     
-    // Test parcours inverse (avantage de la liste doublement chainée!)
+    // Test parcours inverse (avantage de la liste doublement chainee!)
     printf("\nParcours inverse: ");
-    // On peut parcourir de droite à gauche grâce au pointeur prev
+    // On peut parcourir de droite a gauche grâce au pointeur prev
     ds_dlist_print_backward(&list);
     
-    // Test insertion après un nœud
+    // Test insertion apres un nœud
     // ds_dlist_find retourne un pointeur vers DNode (ou NULL)
     DNode* node = ds_dlist_find(&list, 20);
     if (node) { // Si le nœud existe (pointeur non NULL)
-        printf("\nInsertion de 25 après 20\n");
-        // On peut insérer directement après un nœud en O(1) car on a les pointeurs prev et next
+        printf("\nInsertion de 25 apres 20\n");
+        // On peut inserer directement apres un nœud en O(1) car on a les pointeurs prev et next
         ds_dlist_insert_after(&list, node, 25);
         ds_dlist_print_forward(&list);
     }
@@ -189,13 +191,13 @@ void test_dlist(void) {
     printf("\nSuppression de la queue: ");
     // Suppression en O(1) grâce au pointeur tail et prev
     if (ds_dlist_remove_tail(&list, &value)) {
-        printf("Valeur supprimée = %d\n", value);
+        printf("Valeur supprimee = %d\n", value);
     }
     ds_dlist_print_forward(&list);
     
     // Nettoyage
     ds_dlist_clear(&list);
-    printf("\nListe vidée\n");
+    printf("\nListe videe\n");
 }
 
 // ==================== TEST PILE (STACK) ====================
@@ -209,8 +211,8 @@ void test_stack(void) {
     
     // Test push (empiler)
     printf("Empilement: 10, 20, 30, 40\n");
-    // Push ajoute un élément au sommet (top) de la pile
-    // Toutes les opérations sont O(1)
+    // Push ajoute un element au sommet (top) de la pile
+    // Toutes les operations sont O(1)
     ds_stack_push(&stack, 10);
     ds_stack_push(&stack, 20);
     ds_stack_push(&stack, 30);
@@ -222,22 +224,22 @@ void test_stack(void) {
     // Test peek (consulter sans retirer)
     int top; // Variable pour stocker la valeur du sommet
     // peek lit la valeur au sommet sans la retirer
-    if (ds_stack_peek(&stack, &top)) { // Retourne 1 si succès
+    if (ds_stack_peek(&stack, &top)) { // Retourne 1 si succes
         printf("Sommet de la pile: %d\n", top);
     }
     
-    // Test pop (dépiler)
-    printf("\nDépilement:\n");
+    // Test pop (depiler)
+    printf("\nDepilement:\n");
     // Tant que la pile n'est pas vide
     while (!ds_stack_is_empty(&stack)) {
-        int value; // Variable pour stocker la valeur dépilée
-        // pop retire et retourne l'élément du sommet
+        int value; // Variable pour stocker la valeur depilee
+        // pop retire et retourne l'element du sommet
         if (ds_stack_pop(&stack, &value)) {
-            printf("  Dépilé: %d\n", value);
+            printf("  Depile: %d\n", value);
         }
     }
     
-    // Vérifier que la pile est vide
+    // Verifier que la pile est vide
     printf("Pile vide: %s\n", ds_stack_is_empty(&stack) ? "Oui" : "Non");
 }
 
@@ -250,8 +252,8 @@ void test_queue(void) {
     Queue queue;
     queue_init(&queue); // Initialiser la file vide
     
-    // Créer quelques nœuds d'arbre pour tester
-    // ds_btree_create_node alloue de la mémoire avec malloc
+    // Creer quelques nœuds d'arbre pour tester
+    // ds_btree_create_node alloue de la memoire avec malloc
     // Retourne un pointeur vers TNode (TNode*)
     TNode* n1 = ds_btree_create_node(10); // n1 est un pointeur vers TNode
     TNode* n2 = ds_btree_create_node(20); // n2 est un pointeur vers TNode
@@ -260,37 +262,37 @@ void test_queue(void) {
     
     // Test enqueue (enfiler)
     printf("Enfilage: 10, 20, 30, 40\n");
-    // Enqueue ajoute un élément en queue (tail) de la file
-    // On passe les pointeurs n1, n2, etc. (pas &n1 car n1 est déjà un pointeur!)
+    // Enqueue ajoute un element en queue (tail) de la file
+    // On passe les pointeurs n1, n2, etc. (pas &n1 car n1 est deja un pointeur!)
     queue_enqueue(&queue, n1); // n1 est TNode*, on le passe directement
     queue_enqueue(&queue, n2);
     queue_enqueue(&queue, n3);
     queue_enqueue(&queue, n4);
     
-    // Test dequeue (défiler)
-    printf("\nDéfilage:\n");
+    // Test dequeue (defiler)
+    printf("\nDefilage:\n");
     // Tant que la file n'est pas vide
     while (!queue_is_empty(&queue)) {
         // node est un pointeur vers TNode
-        // On va recevoir le pointeur vers le nœud défilé
+        // On va recevoir le pointeur vers le nœud defile
         TNode* node;
-        // dequeue retire l'élément de la tête (head) de la file
-        // &node : on passe l'adresse du pointeur pour que la fonction puisse y écrire
-        // La fonction écrit dans node le pointeur vers le TNode défilé
-        if (queue_dequeue(&queue, &node)) { // Retourne 1 si succès
-            // node->data : accès à la donnée du nœud pointé
-            printf("  Défilé: %d\n", node->data);
+        // dequeue retire l'element de la tete (head) de la file
+        // &node : on passe l'adresse du pointeur pour que la fonction puisse y ecrire
+        // La fonction ecrit dans node le pointeur vers le TNode defile
+        if (queue_dequeue(&queue, &node)) { // Retourne 1 si succes
+            // node->data : acces a la donnee du nœud pointe
+            printf("  Defile: %d\n", node->data);
         }
     }
     
-    // Nettoyage : libérer la mémoire allouée avec malloc
-    // free() libère la mémoire pointée par le pointeur
-    free(n1); // Libérer la mémoire allouée pour n1
+    // Nettoyage : liberer la memoire allouee avec malloc
+    // free() libere la memoire pointee par le pointeur
+    free(n1); // Liberer la memoire allouee pour n1
     free(n2);
     free(n3);
     free(n4);
     queue_clear(&queue);
-    printf("File vidée\n");
+    printf("File videe\n");
 }
 
 // ==================== TEST ARBRE BINAIRE ====================
@@ -302,7 +304,7 @@ void test_btree(void) {
     BTree tree;
     ds_btree_init(&tree); // Initialiser l'arbre vide (root = NULL)
     
-    /* Créer l'arbre:
+    /* Creer l'arbre:
            8
           /   \
          3     10
@@ -311,7 +313,7 @@ void test_btree(void) {
           / \     /
          4   7   13
     */
-    // Créer tous les nœuds avec malloc
+    // Creer tous les nœuds avec malloc
     // Chaque nœud est un pointeur vers TNode (TNode*)
     TNode* n8 = ds_btree_create_node(8);  // n8 pointe vers un TNode avec data=8
     TNode* n3 = ds_btree_create_node(3);  // n3 pointe vers un TNode avec data=3
@@ -325,8 +327,8 @@ void test_btree(void) {
     
     // Construire l'arbre en attachant les nœuds
     tree.root = n8; // La racine de l'arbre pointe vers n8
-    // attach_left/right : attacher un nœud enfant à un nœud parent
-    // On passe les pointeurs directement (n8, n3 sont déjà des pointeurs)
+    // attach_left/right : attacher un nœud enfant a un nœud parent
+    // On passe les pointeurs directement (n8, n3 sont deja des pointeurs)
     ds_btree_attach_left(n8, n3);   // n3 devient le fils gauche de n8
     ds_btree_attach_right(n8, n10); // n10 devient le fils droit de n8
     ds_btree_attach_left(n3, n1);   // n1 devient le fils gauche de n3
@@ -338,13 +340,13 @@ void test_btree(void) {
     
     // Test taille et hauteur
     // tree.root est un pointeur vers TNode, on le passe directement
-    printf("Taille de l'arbre: %d nœuds\n", ds_btree_size(tree.root));
+    printf("Taille de l'arbre: %d noeuds\n", ds_btree_size(tree.root));
     printf("Hauteur de l'arbre: %d\n", ds_btree_height(tree.root));
     
     // Test parcours
     // Les fonctions de parcours prennent un pointeur vers le nœud racine
     // et une fonction callback (print_int) pour traiter chaque valeur
-    printf("\nParcours préfixe: ");
+    printf("\nParcours prefixe: ");
     ds_btree_preorder(tree.root, print_int); // tree.root est TNode*
     printf("\n");
     
@@ -362,15 +364,15 @@ void test_btree(void) {
     
     // Test recherche
     printf("\nRecherche de 6: ");
-    // found est un pointeur vers TNode (ou NULL si non trouvé)
+    // found est un pointeur vers TNode (ou NULL si non trouve)
     TNode* found = ds_btree_find(tree.root, 6);
     if (found) { // Si le pointeur n'est pas NULL
-        printf("Trouvé! Valeur = %d\n", found->data);
+        printf("Trouve! Valeur = %d\n", found->data);
     }
     
-    // Nettoyage : libérer toute la mémoire de l'arbre
+    // Nettoyage : liberer toute la memoire de l'arbre
     ds_btree_clear(&tree); // On passe &tree pour modifier l'arbre
-    printf("\nArbre vidé\n");
+    printf("\nArbre vide\n");
 }
 
 // ==================== TEST ARBRE BINAIRE DE RECHERCHE (BST) ====================
@@ -378,19 +380,19 @@ void test_btree(void) {
 void test_bst(void) {
     printf("\n========== TEST ARBRE BINAIRE DE RECHERCHE (BST) ==========\n\n");
     
-    // BST : Binary Search Tree - arbre binaire avec propriété de recherche
+    // BST : Binary Search Tree - arbre binaire avec propriete de recherche
     BTree bst;
     ds_btree_init(&bst); // Initialiser l'arbre vide
     
     // Test insertion
     // L'insertion dans un BST place automatiquement les valeurs :
-    // - À gauche si < valeur du nœud
-    // - À droite si >= valeur du nœud
+    // - a gauche si < valeur du nœud
+    // - a droite si >= valeur du nœud
     printf("Insertion: 50, 30, 70, 20, 40, 60, 80, 10, 25\n");
     // On passe &bst (adresse) car la fonction modifie l'arbre
     ds_bsttree_add(&bst, 50); // 50 devient la racine
-    ds_bsttree_add(&bst, 30); // 30 < 50, donc à gauche de 50
-    ds_bsttree_add(&bst, 70); // 70 > 50, donc à droite de 50
+    ds_bsttree_add(&bst, 30); // 30 < 50, donc a gauche de 50
+    ds_bsttree_add(&bst, 70); // 70 > 50, donc a droite de 50
     ds_bsttree_add(&bst, 20);
     ds_bsttree_add(&bst, 40);
     ds_bsttree_add(&bst, 60);
@@ -398,37 +400,37 @@ void test_bst(void) {
     ds_bsttree_add(&bst, 10);
     ds_bsttree_add(&bst, 25);
     
-    // Parcours infixe (doit être trié)
-    // Dans un BST, le parcours infixe donne toujours les valeurs triées!
-    printf("\nParcours infixe (doit être trié): ");
+    // Parcours infixe (doit etre trie)
+    // Dans un BST, le parcours infixe donne toujours les valeurs triees!
+    printf("\nParcours infixe (doit etre trie): ");
     // bst.root est un pointeur vers TNode, on le passe directement
     ds_btree_inorder(bst.root, print_int);
     printf("\n");
     
     // Test recherche
-    // La recherche dans un BST est efficace : O(log n) si équilibré
+    // La recherche dans un BST est efficace : O(log n) si equilibre
     printf("\nRecherche de 40: ");
     // found est un pointeur vers TNode (ou NULL)
     TNode* found = ds_bsttree_find(&bst, 40);
     if (found) {
-        printf("Trouvé! Valeur = %d\n", found->data);
+        printf("Trouve! Valeur = %d\n", found->data);
     } else {
-        printf("Non trouvé\n");
+        printf("Non trouve\n");
     }
     
     // Test suppression
     printf("\nSuppression de 20: ");
     // La suppression dans un BST est complexe (3 cas possibles)
-    if (ds_bsttree_remove(&bst, 20)) { // Retourne 1 si succès
-        printf("Supprimé avec succès\n");
+    if (ds_bsttree_remove(&bst, 20)) { // Retourne 1 si succes
+        printf("Supprime avec succes\n");
     }
-    printf("Parcours infixe après suppression: ");
+    printf("Parcours infixe apres suppression: ");
     ds_btree_inorder(bst.root, print_int);
     printf("\n");
     
     // Nettoyage
     ds_btree_clear(&bst);
-    printf("\nBST vidé\n");
+    printf("\nBST vide\n");
 }
 
 // ==================== TEST ARBRE AVL ====================
@@ -436,36 +438,36 @@ void test_bst(void) {
 void test_avl(void) {
     printf("\n========== TEST ARBRE AVL ==========\n\n");
     
-    // AVL : arbre auto-équilibré, garantit O(log n) pour toutes les opérations
+    // AVL : arbre auto-equilibre, garantit O(log n) pour toutes les operations
     AVLTree avl;
     ds_avl_init(&avl); // Initialiser l'arbre vide
     
-    // Test insertion avec auto-équilibrage
-    // L'AVL s'équilibre automatiquement après chaque insertion
-    // en effectuant des rotations si nécessaire
+    // Test insertion avec auto-equilibrage
+    // L'AVL s'equilibre automatiquement apres chaque insertion
+    // en effectuant des rotations si necessaire
     printf("Insertion: 10, 20, 30, 40, 50, 25\n");
-    printf("(L'arbre s'équilibre automatiquement)\n");
-    // Chaque insertion peut déclencher des rotations pour maintenir l'équilibre
+    printf("(L'arbre s'equilibre automatiquement)\n");
+    // Chaque insertion peut declencher des rotations pour maintenir l'equilibre
     ds_avl_insert(&avl, 10);
     ds_avl_insert(&avl, 20);
-    ds_avl_insert(&avl, 30); // Peut déclencher une rotation
+    ds_avl_insert(&avl, 30); // Peut declencher une rotation
     ds_avl_insert(&avl, 40);
     ds_avl_insert(&avl, 50);
     ds_avl_insert(&avl, 25);
     
-    // Parcours infixe (doit être trié, comme un BST)
+    // Parcours infixe (doit etre trie, comme un BST)
     printf("\nParcours infixe: ");
     // avl.root est un pointeur vers AVLNode
     ds_avl_print_inorder(avl.root);
     printf("\n");
     
-    printf("Parcours préfixe: ");
+    printf("Parcours prefixe: ");
     ds_avl_print_preorder(avl.root);
     printf("\n");
     
     // Test taille et hauteur
     // La hauteur d'un AVL est toujours O(log n)
-    printf("\nTaille de l'arbre AVL: %d nœuds\n", ds_avl_size(avl.root));
+    printf("\nTaille de l'arbre AVL: %d noeuds\n", ds_avl_size(avl.root));
     printf("Hauteur de l'arbre AVL: %d\n", ds_avl_get_height(avl.root));
     
     // Test recherche
@@ -474,52 +476,52 @@ void test_avl(void) {
     // found est un pointeur vers AVLNode
     AVLNode* found = ds_avl_find(&avl, 30);
     if (found) {
-        // found->data : accès à la donnée
-        // found->height : accès à la hauteur du nœud (spécifique à AVL)
-        printf("Trouvé! Valeur = %d, Hauteur = %d\n", found->data, found->height);
+        // found->data : acces a la donnee
+        // found->height : acces a la hauteur du nœud (specifique a AVL)
+        printf("Trouve! Valeur = %d, Hauteur = %d\n", found->data, found->height);
     }
     
-    // Test facteur d'équilibre
-    // Le facteur d'équilibre = hauteur(droite) - hauteur(gauche)
-    // Pour un AVL, ce facteur doit être -1, 0, ou 1
-    if (avl.root) { // Vérifier que la racine existe
+    // Test facteur d'equilibre
+    // Le facteur d'equilibre = hauteur(droite) - hauteur(gauche)
+    // Pour un AVL, ce facteur doit etre -1, 0, ou 1
+    if (avl.root) { // Verifier que la racine existe
         int balance = ds_avl_get_balance(avl.root);
-        printf("Facteur d'équilibre de la racine: %d (doit être -1, 0, ou 1)\n", balance);
+        printf("Facteur d'equilibre de la racine: %d (doit etre -1, 0, ou 1)\n", balance);
     }
     
     // Test suppression
-    // La suppression peut aussi déclencher des rotations
+    // La suppression peut aussi declencher des rotations
     printf("\nSuppression de 40: ");
     if (ds_avl_remove(&avl, 40)) {
-        printf("Supprimé avec succès\n");
+        printf("Supprime avec succes\n");
     }
-    printf("Parcours infixe après suppression: ");
+    printf("Parcours infixe apres suppression: ");
     ds_avl_print_inorder(avl.root);
     printf("\n");
     
     // Nettoyage
     ds_avl_clear(&avl);
-    printf("\nArbre AVL vidé\n");
+    printf("\nArbre AVL vide\n");
 }
 
 // ==================== MENU PRINCIPAL ====================
 
 void print_menu(void) {
     printf("\n");
-    printf("╔══════════════════════════════════════════════════════════╗\n");
-    printf("║     TEST DES STRUCTURES DE DONNÉES                      ║\n");
-    printf("╠══════════════════════════════════════════════════════════╣\n");
-    printf("║  1. Liste simplement chainée (head)                     ║\n");
-    printf("║  2. Liste simplement chainée (head + tail)              ║\n");
-    printf("║  3. Liste doublement chainée                             ║\n");
-    printf("║  4. Pile (Stack)                                         ║\n");
-    printf("║  5. File (Queue)                                         ║\n");
-    printf("║  6. Arbre binaire                                        ║\n");
-    printf("║  7. Arbre binaire de recherche (BST)                    ║\n");
-    printf("║  8. Arbre AVL                                            ║\n");
-    printf("║  9. Tous les tests                                       ║\n");
-    printf("║  0. Quitter                                              ║\n");
-    printf("╚══════════════════════════════════════════════════════════╝\n");
+    printf("============================================================\n");
+    printf("     TEST DES STRUCTURES DE DONNEES\n");
+    printf("============================================================\n");
+    printf("  1. Liste simplement chainee (head)\n");
+    printf("  2. Liste simplement chainee (head + tail)\n");
+    printf("  3. Liste doublement chainee\n");
+    printf("  4. Pile (Stack)\n");
+    printf("  5. File (Queue)\n");
+    printf("  6. Arbre binaire\n");
+    printf("  7. Arbre binaire de recherche (BST)\n");
+    printf("  8. Arbre AVL\n");
+    printf("  9. Tous les tests\n");
+    printf("  0. Quitter\n");
+    printf("============================================================\n");
     printf("\nVotre choix: ");
 }
 
@@ -527,23 +529,23 @@ int main(void) {
     // choice est une variable locale de type int
     int choice;
     
-    printf("Bienvenue dans le programme de test des structures de données!\n");
+    printf("Bienvenue dans le programme de test des structures de donnees!\n");
     
     // Boucle infinie pour le menu
     while (1) {
         print_menu(); // Afficher le menu
         
         // scanf("%d", &choice) : lire un entier depuis stdin
-        // &choice : on passe l'ADRESSE de choice pour que scanf puisse y écrire
-        // scanf retourne le nombre d'éléments lus avec succès (1 si OK, 0 si erreur)
+        // &choice : on passe l'ADRESSE de choice pour que scanf puisse y ecrire
+        // scanf retourne le nombre d'elements lus avec succes (1 si OK, 0 si erreur)
         if (scanf("%d", &choice) != 1) {
             printf("Erreur de saisie. Veuillez entrer un nombre.\n");
-            // Vider le buffer d'entrée pour éviter les problèmes
-            while (getchar() != '\n'); // Lire jusqu'à trouver '\n'
+            // Vider le buffer d'entree pour eviter les problemes
+            while (getchar() != '\n'); // Lire jusqu'a trouver '\n'
             continue; // Recommencer la boucle
         }
         
-        // switch : structure de contrôle pour choisir selon la valeur de choice
+        // switch : structure de controle pour choisir selon la valeur de choice
         switch (choice) {
             case 1:
                 test_slist(); // Appeler la fonction de test
@@ -570,7 +572,7 @@ int main(void) {
                 test_avl();
                 break;
             case 9:
-                // Exécuter tous les tests
+                // Executer tous les tests
                 test_slist();
                 test_slist_tail();
                 test_dlist();
@@ -579,23 +581,24 @@ int main(void) {
                 test_btree();
                 test_bst();
                 test_avl();
-                printf("\n✅ Tous les tests sont terminés!\n");
+                printf("\n[OK] Tous les tests sont termines!\n");
                 break;
             case 0:
                 printf("\nAu revoir!\n");
-                return 0; // Quitter le programme (retourner 0 = succès)
+                return 0; // Quitter le programme (retourner 0 = succes)
             default:
-                // Cas par défaut si choice ne correspond à aucun case
+                // Cas par defaut si choice ne correspond a aucun case
                 printf("Choix invalide. Veuillez choisir entre 0 et 9.\n");
                 break;
         }
         
-        // Attendre que l'utilisateur appuie sur Entrée
-        printf("\nAppuyez sur Entrée pour continuer...");
-        // Vider le buffer jusqu'à trouver '\n'
-        while (getchar() != '\n'); // Lire et ignorer les caractères jusqu'à '\n'
+        // Attendre que l'utilisateur appuie sur Entree
+        printf("\nAppuyez sur Entree pour continuer...");
+        // Vider le buffer jusqu'a trouver '\n'
+        while (getchar() != '\n'); // Lire et ignorer les caracteres jusqu'a '\n'
         getchar(); // Consommer le '\n' restant
     }
     
-    return 0; // Ne sera jamais atteint à cause de la boucle infinie
+    return 0; // Ne sera jamais atteint a cause de la boucle infinie
 }
+

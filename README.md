@@ -1,6 +1,41 @@
 # Structures de Données en C
 
-Ce projet contient des implémentations complètes des structures de données fondamentales en langage C
+Ce projet contient des implémentations complètes des structures de données fondamentales en langage C, avec des commentaires en français pour faciliter l'apprentissage.
+
+## 🚀 Démarrage Rapide
+
+### Compilation et Exécution
+
+**⚠️ Problème Courant:** Si vous obtenez des erreurs `undefined reference`, c'est parce que vous compilez seulement `main.c` sans lier les autres fichiers `.c`.
+
+**✅ Solution:** Compiler TOUS les fichiers `.c` ensemble.
+
+**Windows (PowerShell):**
+```bash
+cd Implementation
+gcc -o main.exe main.c Lists/Slist/Slist.c Lists/Slist_tail/Slist_tail.c Lists/Dlist/Dlist.c Stack/Stack.c Queue/Queue.c Trees/Btree/Btree.c Trees/AVL/AVL.c -std=c11 -Wall
+.\main.exe
+```
+
+**Linux/Mac:**
+```bash
+cd Implementation
+gcc -o main main.c Lists/Slist/Slist.c Lists/Slist_tail/Slist_tail.c Lists/Dlist/Dlist.c Stack/Stack.c Queue/Queue.c Trees/Btree/Btree.c Trees/AVL/AVL.c -std=c11 -Wall
+./main
+```
+
+**Avec CMake (CLion):**
+```bash
+cd Implementation
+mkdir build && cd build
+cmake ..
+make                    # Linux/Mac
+# ou dans CLion: Build Project (Ctrl+F9)
+./LinkedList            # Linux/Mac
+# ou cmake-build-debug/LinkedList.exe (Windows)
+```
+
+**Note:** Dans PowerShell, utilisez `.\main.exe` (avec `.\`) pour exécuter un fichier dans le répertoire courant.
 
 ## 📚 Structures de Données Implémentées
 
@@ -195,25 +230,6 @@ Ce projet contient des implémentations complètes des structures de données fo
 - Garantit O(log n) pour toutes les opérations
 - Meilleur que BST pour des données dynamiques
 
-## 🚀 Compilation et Utilisation
-
-### Compilation avec CMake
-
-```bash
-cd Implementation
-mkdir build
-cd build
-cmake ..
-make
-./LinkedList
-```
-
-### Compilation manuelle
-
-```bash
-gcc -o main main.c Slist.c Slist_tail.c Dlist.c Stack.c Queue.c Btree.c AVL.c -std=c11
-./main
-```
 
 ## 📖 Exemples d'Utilisation
 

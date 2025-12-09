@@ -116,8 +116,8 @@ int ds_btree_height(TNode* pnode) {
 
 // Helper function to free a single node
 // Used as callback in ds_btree_clear
-static void free_node(TNode* node) {
-    if (node) free(node); // Free the node if it's not NULL
+static void free_node(const TNode* node) {
+    if (node) free((TNode*)node); // Free the node if it's not NULL (cast const away for free)
 }
 
 // Clear all nodes in the tree (free memory)
@@ -273,13 +273,14 @@ static TNode* ds_bsttree_find_min(TNode* node) {
 
 // Trouver le nœud avec la valeur maximale dans un sous-arbre
 // Complexité: O(h)
-static TNode* ds_bsttree_find_max(TNode* node) {
-    if (node == NULL) return NULL;
-    while (node->right != NULL) {
-        node = node->right;
-    }
-    return node;
-}
+// (Non utilisee actuellement, mais disponible pour les operations futures)
+// static TNode* ds_bsttree_find_max(TNode* node) {
+//     if (node == NULL) return NULL;
+//     while (node->right != NULL) {
+//         node = node->right;
+//     }
+//     return node;
+// }
 
 // Supprimer une valeur d'un BST
 // Complexité: O(h) où h est la hauteur de l'arbre
